@@ -1,18 +1,26 @@
 package com.example.demo.service;
 
-import java.util.UUID;
+import lombok.Builder;
+import lombok.Data;
+import org.springframework.http.HttpMethod;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+@Builder
+@Service
+@Data
 
 public class RestTemplateService {
+    private static RestTemplate restTemplate;
+
     public static String getNum(int num) {
-        //pass the num to the other server which has method:
-//        if (num % 2 == 0 {
-//            String output = "even";
-//        }
-//        else {
-//            String output = "odd";
-//        }
-// receive output from other server and return it
-        String output = ""; //this is here to avoid errors
+    String output = restTemplate.exchange("http://localhost:8081/api/v1/evenOdd/returnAnswer/" + num,
+            HttpMethod.GET,
+            null,
+            String.class).getBody();
         return output;
     }
 }
+
+
+
